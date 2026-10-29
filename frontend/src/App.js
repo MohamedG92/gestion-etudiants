@@ -5,7 +5,7 @@ function App() {
   const [erreur, setErreur] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/etudiants")
+    fetch(`${process.env.REACT_APP_API_URL || "http://localhost:5000"}/api/etudiants`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Impossible de charger les étudiants");
