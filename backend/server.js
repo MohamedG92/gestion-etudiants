@@ -1,11 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const etudiantRoutes = require("./routes/etudiantRoutes");
 const authRoutes = require("./routes/authRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(cors({
+    origin: ["http://localhost:5173", "http://localhost:3000"]
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
