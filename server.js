@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const etudiantRoutes = require("./routes/etudiantRoutes");
+const authRoutes = require("./routes/authRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -16,6 +17,7 @@ app.get("/api/test", (req, res) => {
 });
 
 app.use("/api/etudiants", etudiantRoutes);
+app.use("/api/auth", authRoutes);
 
 async function startServer() {
     try {
