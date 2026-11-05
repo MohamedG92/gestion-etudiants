@@ -21,7 +21,7 @@ app.use("/api/clients", async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({ message: "Connexion à la base impossible", debug: String(error.message).replace(/\/\/[^@]*@/g, "//***@"), uriType: typeof process.env.MONGODB_URI, uriStart: String(process.env.MONGODB_URI || "").slice(0, 14) });
+    res.status(500).json({ message: "Connexion à la base impossible" });
   }
 });
 
