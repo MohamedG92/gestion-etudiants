@@ -12,6 +12,7 @@ app.use(
     origin: [
       (process.env.FRONTEND_URL || "http://localhost:3000").trim().replace(/\/+$/, ""),
       "http://localhost:3000",
+      "https://moncrm-cms.duckdns.org",
       /^https:\/\/frontend-[a-z0-9-]+\.vercel\.app$/
     ]
   })
