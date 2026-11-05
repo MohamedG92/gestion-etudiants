@@ -7,7 +7,15 @@ const clientRoutes = require("./routes/clients");
 
 const app = express();
 
-app.use(cors({ origin: (process.env.FRONTEND_URL || "http://localhost:3000").trim().replace(/\/+$/, "") }));
+app.use(
+  cors({
+    origin: [
+      (process.env.FRONTEND_URL || "http://localhost:3000").trim().replace(/\/+$/, ""),
+      "http://localhost:3000",
+      /^https:\/\/frontend-[a-z0-9-]+\.vercel\.app$/
+    ]
+  })
+);
 
 app.use(express.json());
 
