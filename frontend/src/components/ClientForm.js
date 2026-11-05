@@ -21,9 +21,9 @@ function ClientForm({ onAjouter }) {
   }
 
   return (
-    <form className="card client-form" onSubmit={handleSubmit}>
-      <h2>Nouveau client</h2>
-      <div className="form-row">
+    <section className="group">
+      <h2 className="group-title">Nouveau client</h2>
+      <form className="card client-form" onSubmit={handleSubmit}>
         <label className="field">
           <span>Nom</span>
           <input
@@ -54,8 +54,8 @@ function ClientForm({ onAjouter }) {
         <button type="submit" className="btn-primary" disabled={envoi}>
           {envoi ? "Ajout..." : "Ajouter"}
         </button>
-      </div>
-    </form>
+      </form>
+    </section>
   );
 }
 

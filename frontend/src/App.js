@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AddressBook, MagnifyingGlass, UsersThree } from "@phosphor-icons/react";
 import Header from "./components/Header";
 import ClientForm from "./components/ClientForm";
 import ClientList from "./components/ClientList";
@@ -92,22 +93,17 @@ function App() {
     <div className="layout">
       <aside className="sidebar">
         <div className="logo">
-          <span className="logo-mark">C</span>
+          <AddressBook size={20} weight="fill" className="logo-icon" />
           <span className="logo-text">Mon CRM</span>
         </div>
-        <nav className="nav">
-          <span className="nav-item active">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+        <nav className="nav" aria-label="Navigation">
+          <span className="nav-item active" aria-current="page">
+            <UsersThree size={18} weight="fill" />
             Clients
           </span>
         </nav>
-        <div className="sidebar-footer">
-          <span className={`status-dot ${connecte === false ? "off" : connecte ? "" : "wait"}`} />
+        <div className="api-status">
+          <span className={`api-dot ${connecte === false ? "off" : connecte ? "on" : "wait"}`} />
           {connecte === null ? "Connexion..." : connecte ? "API connectée" : "API hors ligne"}
         </div>
       </aside>
@@ -120,25 +116,20 @@ function App() {
             {message}
           </p>
         )}
-        <section className="card">
+        <section className="group">
           <div className="list-toolbar">
-            <div>
-              <h2>Clients</h2>
-              <p className="card-sub">{clientsFiltres.length} affiché(s)</p>
-            </div>
-            <div className="search">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <circle cx="11" cy="11" r="7" />
-                <path d="M21 21l-4.3-4.3" />
-              </svg>
+            <h2 className="group-title">Liste ({clientsFiltres.length})</h2>
+            <label className="search">
+              <MagnifyingGlass size={15} />
               <input
                 className="recherche"
                 type="search"
                 placeholder="Rechercher par nom ou email..."
+                aria-label="Rechercher par nom ou email"
                 value={recherche}
                 onChange={(event) => setRecherche(event.target.value)}
               />
-            </div>
+            </label>
           </div>
           <ClientList
             clients={clientsFiltres}

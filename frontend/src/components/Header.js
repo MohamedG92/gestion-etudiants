@@ -1,28 +1,22 @@
 function Header({ total, stats }) {
-  const cartes = [
-    { label: "Total", valeur: total, classe: "stat-total" },
-    { label: "Prospects", valeur: stats.prospect, classe: "stat-prospect" },
-    { label: "Clients", valeur: stats.client, classe: "stat-client" },
-    { label: "Inactifs", valeur: stats.inactif, classe: "stat-inactif" }
+  const statuts = [
+    { cle: "prospect", label: "prospect", valeur: stats.prospect },
+    { cle: "client", label: "client", valeur: stats.client },
+    { cle: "inactif", label: "inactif", valeur: stats.inactif }
   ];
 
   return (
     <header className="header">
-      <div className="header-top">
-        <div>
-          <p className="eyebrow">Tableau de bord</p>
-          <h1>Mon CRM</h1>
-          <p className="subtitle">{total} client(s) enregistré(s)</p>
-        </div>
-      </div>
-      <div className="stats">
-        {cartes.map((carte) => (
-          <div key={carte.label} className={`stat ${carte.classe}`}>
-            <span className="stat-label">{carte.label}</span>
-            <span className="stat-value">{carte.valeur}</span>
-          </div>
+      <h1>Clients</h1>
+      <p className="summary">
+        <span>{total} client(s) enregistré(s)</span>
+        {statuts.map((statut) => (
+          <span key={statut.cle} className="summary-item">
+            <span className={`dot dot-${statut.cle}`} aria-hidden="true" />
+            {statut.valeur} {statut.label}{statut.valeur > 1 ? "s" : ""}
+          </span>
         ))}
-      </div>
+      </p>
     </header>
   );
 }
