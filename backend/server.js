@@ -1,39 +1,41 @@
 require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const etudiantRoutes = require("./routes/etudiantRoutes");
-const authRoutes = require("./routes/authRoutes");
-const app = express();
-const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:3000", process.env.FRONTEND_URL].filter(Boolean)
-}));
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const clientRoutes = require("./routes/clients");
+
+const app = express();
+
+app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Mon premier serveur MERN !");
+  res.json({ message: "API CRM opérationnelle" });
 });
 
-app.get("/api/test", (req, res) => {
-    res.json({ message: "L'API fonctionne correctement" });
+app.use("/api/clients", async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Connexion à la base impossible" });
+  }
 });
 
-app.use("/api/etudiants", etudiantRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/clients", clientRoutes);
 
-async function startServer() {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log("MongoDB est connecté");
-        app.listen(PORT, () => {
-            console.log(`Serveur lancé sur le port ${PORT}`);
-        });
-    } catch (error) {
-        console.error("Erreur MongoDB :", error.message);
-        process.exit(1);
-    }
+app.use((error, req, res, next) => {
+  res.status(error.status || 500).json({ message: "Requête invalide" });
+});
+
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Serveur démarré sur http://localhost:${PORT}`);
+  });
 }
 
-startServer();
+module.exports = app;
